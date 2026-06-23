@@ -174,18 +174,7 @@ export default function ArticleModal({ article, onClose, onEditInCMS, currentLan
     setIsPlayingAudio(false);
     setIsPausedAudio(false);
   };
-  const [comments, setComments] = useState<Array<{ name: string; text: string; date: string }>>([
-    {
-      name: 'Dr. Rohan Alwis',
-      text: 'Highly insightful breakdown. The restructuring of the state enterprises is indeed a critical factor that needs immediate focus.',
-      date: '1 hour ago'
-    },
-    {
-      name: 'Nilani Fernando',
-      text: 'Excited about the positive economic outlook! Hopefully, this translates to tangible cost reductions at the retail level soon.',
-      date: '30 mins ago'
-    }
-  ]);
+  const [comments, setComments] = useState<Array<{ name: string; text: string; date: string }>>([]);
 
   // Sync comments in real-time with Firestore subcollection
   useEffect(() => {
