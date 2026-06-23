@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global safety net default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Articles Collection representing Lankan Ledger news entries
+    match /articles/{articleId} {
+      allow read: if true;
+      allow create: if isValidArticle(incoming()) && isValidId(articleId);
+      allow update: if isValidArticle(incoming()) && isValidId(articleId);
+      allow delete: if isValidId(articleId);
+    }
+
+    // 3. Comments Subcollection per article preserving public freedom of expression
+    match /articles/{articleId}/comments/{commentId} {
+      allow read: if true;
+      allow create: if isValidComment(incoming()) && isValidId(commentId);
+      allow update, delete: if false; // comments are immutable under Lankan ledger audit policy
+    }
+
+    // Global Core Primitive Helpers
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    
+    function incoming() { 
+      return request.resource.data; 
+    }
+
+    function isValidArticle(data) {
+      return data.keys().hasAll(['id', 'title', 'content', 'category', 'status', 'views'])
+        && data.id is string
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 1000
+        && data.content is string && data.content.size() > 0 && data.content.size() <= 200000
+        && data.category is string && (data.category == 'Politics' || data.category == 'Economy' || data.category == 'World' || data.category == 'Sports' || data.category == 'Tech' || data.category == 'Culture' || data.category == 'Agri-Business' || data.category == 'Energy')
+        && data.status is string && (data.status == 'Draft' || data.status == 'Scheduled' || data.status == 'Published')
+        && data.views is number;
+    }
+
+    function isValidComment(data) {
+      return data.keys().hasAll(['name', 'text', 'date'])
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 100
+        && data.text is string && data.text.size() > 0 && data.text.size() <= 5000
+        && data.date is string && data.date.size() > 0 && data.date.size() <= 100;
+    }
+  }
+}

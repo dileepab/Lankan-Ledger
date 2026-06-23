@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "Article": {
+      "title": "Article",
+      "description": "An editorial report or article.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique identifier of the article" },
+        "title": { "type": "string", "description": "The article's title" },
+        "subtitle": { "type": "string", "description": "The article's subtitle or summary" },
+        "content": { "type": "string", "description": "The main body content of the article" },
+        "category": { "type": "string", "enum": ["Politics", "Economy", "World", "Sports", "Tech", "Culture", "Agri-Business", "Energy"] },
+        "tags": { "type": "array", "description": "List of tags associated with the article" },
+        "publishedAt": { "type": "string", "description": "The published time relative string" },
+        "author": { "type": "string", "description": "The article's author / journalist" },
+        "image": { "type": "string", "description": "The featured image URL" },
+        "imageCaption": { "type": "string", "description": "The caption for the featured image" },
+        "sinhalaMapping": { "type": "string", "description": "Mapping ID to Sinhala translation" },
+        "tamilMapping": { "type": "string", "description": "Mapping ID to Tamil translation" },
+        "status": { "type": "string", "enum": ["Draft", "Scheduled", "Published"] },
+        "views": { "type": "number", "description": "Number of times this article has been viewed" },
+        "readTime": { "type": "string", "description": "Calculated article read time" }
+      },
+      "required": ["id", "title", "content", "category", "status", "views"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "Reader responses / feedback on an article.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Username or name of the commenter" },
+        "text": { "type": "string", "description": "The text content of the response" },
+        "date": { "type": "string", "description": "The timestamp string of the comment" }
+      },
+      "required": ["name", "text", "date"]
+    }
+  },
+  "firestore": {
+    "articles/{articleId}": {
+      "schema": "Article",
+      "description": "Main collection containing all news articles"
+    },
+    "articles/{articleId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Sub-collection of comments per article"
+    }
+  }
+}
