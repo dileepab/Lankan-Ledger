@@ -1345,3 +1345,6 @@ export default function ReaderView({
     </div>
   );
 }
+
+// Sync trigger: accounts aligned to enable direct sync to AI Studio.
+

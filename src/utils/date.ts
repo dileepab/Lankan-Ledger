@@ -152,3 +152,5 @@ export function parseLegacyDateToISO(legacyStr: string): string {
   
   return new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
 }
+// Sync trigger: accounts aligned to enable direct sync to AI Studio.
+

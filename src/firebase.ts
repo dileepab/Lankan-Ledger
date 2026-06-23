@@ -196,3 +196,6 @@ export async function addCommentToFirestore(
     handleFirestoreError(err, OperationType.CREATE, path);
   }
 }
+
+// Sync trigger: accounts aligned to enable direct sync to AI Studio.
+

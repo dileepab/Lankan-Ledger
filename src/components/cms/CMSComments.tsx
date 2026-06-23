@@ -202,3 +202,6 @@ export default function CMSComments({ articles, onNotify, bylineName, pressRole 
     </div>
   );
 }
+
+// Sync trigger: accounts aligned to enable direct sync to AI Studio.
+

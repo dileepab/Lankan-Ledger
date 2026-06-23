@@ -540,3 +540,6 @@ export default function ArticleModal({ article, onClose, onEditInCMS, currentLan
     </div>
   );
 }
+
+// Sync trigger: accounts aligned to enable direct sync to AI Studio.
+
